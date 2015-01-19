@@ -1,6 +1,6 @@
 //	Customization
-
-var appPort = 3000;
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 
 // Librairies
 
@@ -28,9 +28,8 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res){
   res.render('home.jade');
 });
-server.listen(appPort);
-// app.listen(appPort);
-console.log("Server listening on port "+appPort);
+server.listen(server_port, server_ip_address);
+console.log("Server listening on port "+server_port);
 
 // Handle the socket.io connections
 
