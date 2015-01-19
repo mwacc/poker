@@ -1,0 +1,13 @@
+{
+  "name":"poker",
+  "node":"0.10.35",
+  "author":"mwacc",
+  "dependencies": {
+  	"socket.io": "*",
+  	"express": "*",
+  	"jade": "*"
+  	  },
+  "scripts": {
+  	"start": "node server.js"
+  }
+}
