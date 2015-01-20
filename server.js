@@ -28,6 +28,13 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res){
   res.render('home.jade');
 });
+app.post('/session', function(req, res){
+	console.dir(req);
+	var targetUrl = '/session/'+req.params('user');
+	res.render('session.jade', {targetUrl : targetUrl})
+	//res.locals(targetUrl)
+});
+
 server.listen(appPort);
 // app.listen(appPort);
 console.log("Server listening on port "+appPort);
