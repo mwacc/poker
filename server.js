@@ -5,6 +5,10 @@ var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 // Librairies
 
 var express = require('express'), app = express();
+var bodyParser = require('body-parser');
+var crypto =  require('crypto');
+
+
 var http = require('http')
   , server = http.createServer(app)
   , io = require('socket.io').listen(server);
@@ -21,6 +25,8 @@ app.set('view engine', 'jade');
 app.set("view options", { layout: false })
 
 app.use(express.static(__dirname + '/public'));
+//Here we are configuring express to use body-parser as middle-ware.
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 // Render and send the main page
@@ -29,15 +35,19 @@ app.get('/', function(req, res){
   res.render('home.jade');
 });
 app.post('/session', function(req, res){
-	console.dir(req);
-	var targetUrl = '/session/'+req.params('user');
-	res.render('session.jade', {targetUrl : targetUrl})
-	//res.locals(targetUrl)
+	var shasum = crypto.createHash('sha1');
+	shasum.update(req.body.user);
+	var targetUrl = '/session/' + shasum.digest('hex');
+	res.redirect(targetUrl);
+});
+app.get('/session/:sessionid', function(req, res){
+	var targetUrl = '/session/' + req.params.sessionid;
+	res.render('session.jade', {targetUrl : targetUrl});
 });
 
-server.listen(appPort);
+server.listen(server_port, server_ip_address);
 // app.listen(appPort);
-console.log("Server listening on port "+appPort);
+console.log("Server listening on port "+server_port);
 
 // Handle the socket.io connections
 

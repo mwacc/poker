@@ -5,7 +5,8 @@
   "dependencies": {
   	"socket.io": "*",
   	"express": "*",
-  	"jade": "*"
+  	"jade": "*",
+    "body-parser": "*"
   	  },
   "scripts": {
   	"start": "node server.js"
