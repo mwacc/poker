@@ -68,11 +68,14 @@ io.sockets.on('connection', function (socket) { // First connection
 		var name = data['name'];
 		console.log('user '+name+' joined session '+sessionId);
 
+		socket.join(sessionId)
+		
+
 		// add new user to collection
 		var allUsers = sessionMap.get(sessionId);
 		allUsers[name] = true
 		sessionMap.set(sessionId, allUsers)
-		io.emit('join', allUsers);
+		io.to(sessionId).emit('join', allUsers)
 	});
 
 	
