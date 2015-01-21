@@ -8,6 +8,14 @@ html(lang="en")
 		script(src="/socket.io/socket.io.js")
 		script(src="/scripts.js")
 	body
-		| Share this url with your teammates #{targetUrl}
+		input(id='session_id',type='hidden',name='session_id',value='#{session}')
+		if askForName
+			Enter your name to join session: 
+			input(id='page_member_name',type='text',name='page_member_name')
+			input(type='button', value='Enter', onclick="registerMember()")
+		else
+			input(id='page_owner_name',type='hidden',name='page_owner_name',value='#{page_owner_name}')
+			| Hey #{page_owner_name}! Share this url with your teammates #{targetUrl}
 		br
+		ul(id='names')
 				

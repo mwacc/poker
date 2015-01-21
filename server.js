@@ -28,21 +28,32 @@ app.use(express.static(__dirname + '/public'));
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
 
+var LRU = require("lru-cache")
+  , options = { max: 5000
+              , length: function (n) { return n * 2 }
+              , maxAge: 1000 * 60 * 60 * 4 } // 4 hrs per session
+  , sessionMap = LRU(options)
 
 // Render and send the main page
-
 app.get('/', function(req, res){
   res.render('home.jade');
 });
 app.post('/session', function(req, res){
 	var shasum = crypto.createHash('sha1');
-	shasum.update(req.body.user);
+	shasum.update(req.body.user + Date.now());
 	var targetUrl = '/session/' + shasum.digest('hex');
-	res.redirect(targetUrl);
+	// 307 Temporary Redirect (since HTTP/1.1) In this occasion, the request should be repeated with another URI
+	res.redirect(307, targetUrl);
 });
-app.get('/session/:sessionid', function(req, res){
-	var targetUrl = '/session/' + req.params.sessionid;
-	res.render('session.jade', {targetUrl : targetUrl});
+// this is redirected post from /session
+app.post('/session/:sessionid', function(req, res) {
+	var targetUrl = req.headers.host + '/session/' + req.params.sessionid;
+	sessionMap.set(req.params.sessionid, {})
+	res.render('session.jade', {session: req.params.sessionid, targetUrl : targetUrl, page_owner_name: req.body.user});
+});
+// this is shared link that all team members join
+app.get('/session/:sessionid', function(req, res) {
+	res.render('session.jade', {session: req.params.sessionid, askForName: true});
 });
 
 server.listen(server_port, server_ip_address);
@@ -50,65 +61,19 @@ server.listen(server_port, server_ip_address);
 console.log("Server listening on port "+server_port);
 
 // Handle the socket.io connections
-
-var users = 0; //count the users
-
 io.sockets.on('connection', function (socket) { // First connection
-	users += 1; // Add 1 to the count
-	reloadUsers(); // Send the count to all the users
-	socket.on('message', function (data) { // Broadcast the message to all
-		if(pseudoSet(socket))
-		{
-			var transmit = {date : new Date().toISOString(), pseudo : returnPseudo(socket), message : data};
-			socket.broadcast.emit('message', transmit);
-			console.log("user "+ transmit['pseudo'] +" said \""+data+"\"");
-		}
+	
+	console.log('...');
+
+	socket.on('connect', function (data) {
+		console.log(data);
+		var sessionId = data['sessionId'];
+		var name = data['name'];
+		console.log('user '+name+' joined session '+sessionId);
+
+		io.emit('connect', name);
 	});
-	socket.on('setPseudo', function (data) { // Assign a name to the user
-		if (pseudoArray.indexOf(data) == -1) // Test if the name is already taken
-		{
-			socket.set('pseudo', data, function(){
-				pseudoArray.push(data);
-				socket.emit('pseudoStatus', 'ok');
-				console.log("user " + data + " connected");
-			});
-		}
-		else
-		{
-			socket.emit('pseudoStatus', 'error') // Send the error
-		}
-	});
-	socket.on('disconnect', function () { // Disconnection of the client
-		users -= 1;
-		reloadUsers();
-		if (pseudoSet(socket))
-		{
-			var pseudo;
-			socket.get('pseudo', function(err, name) {
-				pseudo = name;
-			});
-			var index = pseudoArray.indexOf(pseudo);
-			pseudo.slice(index - 1, 1);
-		}
-	});
+
+	
 });
 
-function reloadUsers() { // Send the count of the users to all
-	io.sockets.emit('nbUsers', {"nb": users});
-}
-function pseudoSet(socket) { // Test if the user has a name
-	var test;
-	socket.get('pseudo', function(err, name) {
-		if (name == null ) test = false;
-		else test = true;
-	});
-	return test;
-}
-function returnPseudo(socket) { // Return the name of the user
-	var pseudo;
-	socket.get('pseudo', function(err, name) {
-		if (name == null ) pseudo = false;
-		else pseudo = name;
-	});
-	return pseudo;
-}

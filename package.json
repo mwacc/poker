@@ -6,7 +6,8 @@
   	"socket.io": "*",
   	"express": "*",
   	"jade": "*",
-    "body-parser": "*"
+    "body-parser": "*",
+    "lru-cache" : "https://github.com/isaacs/node-lru-cache/tarball/master"
   	  },
   "scripts": {
   	"start": "node server.js"

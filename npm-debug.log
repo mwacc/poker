@@ -1,0 +1,70 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.35
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 warn package.json poker@ No repository field.
+6 verbose readDependencies using package.json deps
+7 verbose install where, deps [ 'd:\\GitHub\\poker',
+7 verbose install   [ 'socket.io', 'express', 'jade', 'body-parser', 'lru-cache' ] ]
+8 info preinstall poker@
+9 verbose readDependencies using package.json deps
+10 verbose already installed skipping socket.io@* d:\GitHub\poker
+11 verbose already installed skipping express@* d:\GitHub\poker
+12 verbose already installed skipping jade@* d:\GitHub\poker
+13 verbose already installed skipping body-parser@* d:\GitHub\poker
+14 verbose cache add [ 'lru-cache@https://github.com/isaacs/node-lru-cache/blob/master',
+14 verbose cache add   null ]
+15 verbose cache add name=undefined spec="lru-cache@https://github.com/isaacs/node-lru-cache/blob/master" args=["lru-cache@https://github.com/isaacs/node-lru-cache/blob/master",null]
+16 verbose parsed url { protocol: null,
+16 verbose parsed url   slashes: null,
+16 verbose parsed url   auth: null,
+16 verbose parsed url   host: null,
+16 verbose parsed url   port: null,
+16 verbose parsed url   hostname: null,
+16 verbose parsed url   hash: null,
+16 verbose parsed url   search: null,
+16 verbose parsed url   query: null,
+16 verbose parsed url   pathname: 'lru-cache@https://github.com/isaacs/node-lru-cache/blob/master',
+16 verbose parsed url   path: 'lru-cache@https://github.com/isaacs/node-lru-cache/blob/master',
+16 verbose parsed url   href: 'lru-cache@https://github.com/isaacs/node-lru-cache/blob/master' }
+17 verbose cache add name="lru-cache" spec="https://github.com/isaacs/node-lru-cache/blob/master" args=["lru-cache","https://github.com/isaacs/node-lru-cache/blob/master"]
+18 verbose parsed url { protocol: 'https:',
+18 verbose parsed url   slashes: true,
+18 verbose parsed url   auth: null,
+18 verbose parsed url   host: 'github.com',
+18 verbose parsed url   port: null,
+18 verbose parsed url   hostname: 'github.com',
+18 verbose parsed url   hash: null,
+18 verbose parsed url   search: null,
+18 verbose parsed url   query: null,
+18 verbose parsed url   pathname: '/isaacs/node-lru-cache/blob/master',
+18 verbose parsed url   path: '/isaacs/node-lru-cache/blob/master',
+18 verbose parsed url   href: 'https://github.com/isaacs/node-lru-cache/blob/master' }
+19 silly lockFile 03d958d2-saacs-node-lru-cache-blob-master https://github.com/isaacs/node-lru-cache/blob/master
+20 verbose lock https://github.com/isaacs/node-lru-cache/blob/master C:\Users\Kostyantyn_Kudryavtsev@epam.com\AppData\Roaming\npm-cache\03d958d2-saacs-node-lru-cache-blob-master.lock
+21 verbose addRemoteTarball [ 'https://github.com/isaacs/node-lru-cache/blob/master', null ]
+22 info retry fetch attempt 1 at 14:51:49
+23 verbose fetch to= C:\Users\KOSTYA~1.COM\AppData\Local\Temp\npm-12784-UpSnYe8C\github.com\isaacs\node-lru-cache\blob\master
+24 http GET https://github.com/isaacs/node-lru-cache/blob/master
+25 http 404 https://github.com/isaacs/node-lru-cache/blob/master
+26 error fetch failed https://github.com/isaacs/node-lru-cache/blob/master
+27 silly lockFile 03d958d2-saacs-node-lru-cache-blob-master https://github.com/isaacs/node-lru-cache/blob/master
+28 silly lockFile 03d958d2-saacs-node-lru-cache-blob-master https://github.com/isaacs/node-lru-cache/blob/master
+29 error Error: 404 Not Found
+29 error     at WriteStream.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\fetch.js:58:12)
+29 error     at WriteStream.emit (events.js:117:20)
+29 error     at evalmachine.<anonymous>:1610:14
+29 error     at C:\Program Files\nodejs\node_modules\npm\node_modules\graceful-fs\graceful-fs.js:102:5
+29 error     at Object.oncomplete (evalmachine.<anonymous>:108:15)
+30 error If you need help, you may report this *entire* log,
+30 error including the npm and node versions, at:
+30 error     <http://github.com/npm/npm/issues>
+31 error System Windows_NT 6.1.7601
+32 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install"
+33 error cwd d:\GitHub\poker
+34 error node -v v0.10.35
+35 error npm -v 1.4.28
+36 verbose exit [ 1, true ]
