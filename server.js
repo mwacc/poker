@@ -63,15 +63,16 @@ console.log("Server listening on port "+server_port);
 // Handle the socket.io connections
 io.sockets.on('connection', function (socket) { // First connection
 	
-	console.log('...');
-
-	socket.on('connect', function (data) {
-		console.log(data);
+	socket.on('join', function (data) {
 		var sessionId = data['sessionId'];
 		var name = data['name'];
 		console.log('user '+name+' joined session '+sessionId);
 
-		io.emit('connect', name);
+		// add new user to collection
+		var allUsers = sessionMap.get(sessionId);
+		allUsers[name] = true
+		sessionMap.set(sessionId, allUsers)
+		io.emit('join', allUsers);
 	});
 
 	

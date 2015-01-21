@@ -22,9 +22,11 @@ function registerMember() {
 }
 
 function sendRegistrationMessage(name) {
-	socket.emit('connect', {'sessionId': sessionId, 'name': name});
+	socket.emit('join', {'sessionId': sessionId, 'name': name});
 }
 
-socket.on('connect', function(name){
-	$('#names').append($('<li>').text(name));
+socket.on('join', function(users){
+	$('#names').empty();
+	for(name in users)
+		$('#names').append($('<li>').text(name));
 });
