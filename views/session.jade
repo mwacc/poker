@@ -1,21 +1,33 @@
 doctype html
-html(lang="en")
+html(lang='en')
 	head
 		title Planning Poker Session
-		link(rel="stylesheet", href="/style.css")
+		link(rel='stylesheet', href='/style.css')
 		script(src='http://code.jquery.com/jquery-1.7.1.min.js')
 		script(src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js')
-		script(src="/socket.io/socket.io.js")
-		script(src="/scripts.js")
+		script(src='/socket.io/socket.io.js')
+		script(src='/scripts.js')
 	body
 		input(id='session_id',type='hidden',name='session_id',value='#{session}')
+		input(id='current_user',type='hidden',name='current_user')
 		if askForName
 			Enter your name to join session: 
 			input(id='page_member_name',type='text',name='page_member_name')
-			input(type='button', value='Enter', onclick="registerMember()")
+			input(type='button', value='Enter', onclick='registerMember()')
 		else
 			input(id='page_owner_name',type='hidden',name='page_owner_name',value='#{page_owner_name}')
 			| Hey #{page_owner_name}! Share this url with your teammates #{targetUrl}
+			input(type='button', value='New Round', onclick='newRound()')
 		br
 		ul(id='names')
-				
+		br
+		
+		input(type='button', value='1', onclick='bid(1)', class="bid-button")
+		input(type='button', value='2', onclick='bid(2)', class="bid-button")
+		input(type='button', value='3', onclick='bid(3)', class="bid-button")
+		input(type='button', value='5', onclick='bid(5)', class="bid-button")
+		input(type='button', value='8', onclick='bid(8)', class="bid-button")
+		input(type='button', value='13', onclick='bid(13)', class="bid-button")
+		input(type='button', value='21', onclick='bid(21)', class="bid-button")
+		input(type='button', value='40', onclick='bid(40)', class="bid-button")
+		input(type='button', value='-', onclick='bid(-)', class="bid-button")

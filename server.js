@@ -1,5 +1,5 @@
 //	Customization
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 9001
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 
 // Librairies
@@ -78,6 +78,19 @@ io.sockets.on('connection', function (socket) { // First connection
 		io.to(sessionId).emit('join', allUsers)
 	});
 
+	socket.on('bid', function(data) {
+		var sessionId = data['sessionId'];
+		var name = data['name'];
+		var bid = data['bid'];
+		console.log('user '+name+' @ session '+sessionId+' made bid '+bid);		
+
+		io.to(sessionId).emit('bid', data)
+	});
+
+	socket.on('newRound', function(data) {
+		var sessionId = data['sessionId'];
+		io.to(sessionId).emit('newRound', sessionId)
+	});
 	
 });
 
